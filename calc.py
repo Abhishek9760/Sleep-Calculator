@@ -37,16 +37,8 @@ def calc_sleep_hours():
     sleep_hours = 8 * total_days
 
     # labels
-    alive_label = tkinter.Label(
-        result_frame,
-        text=f"You have been alive for {int(alive_days)} days",
-        font=("Cambria", 10, "italic"),
-    )
-    sleep_label = tkinter.Label(
-        result_frame,
-        text=f"You have slept {sleep_hours} hours",
-        font=("Cambria", 10, "italic"),
-    )
+    alive_label = result_label(text=f"You have been alive for {int(alive_days)} days")
+    sleep_label = result_label(text=f"You have slept {sleep_hours} hours")
     alive_label.grid(row=0, column=1, sticky="E", ipadx=5, ipady=5)
     sleep_label.grid(row=1, column=1, sticky="E", ipadx=5, ipady=5)
 
@@ -87,11 +79,13 @@ controller_label = partial(
 )
 controller_entry = partial(create_entry, frame=controller_frame, width=5, borderwidth=3)
 result_button = partial(create_button, borderwidth=3, frame=result_frame, fg="#fff")
-
+result_label = partial(
+    create_label, frame=result_frame, font=("Cambria", 10, "italic"), fg=None
+)
 
 # title
-sleep_title = tkinter.Label(
-    title_frame, text="Sleep Calculator", fg="blue", font=("Arial", 20, "bold")
+sleep_title = create_label(
+    frame=title_frame, text="Sleep Calculator", fg="blue", font=("Arial", 20, "bold")
 )
 sleep_title.pack(pady=20)
 title_frame.pack_propagate(0)
@@ -144,14 +138,6 @@ year2.insert(END, datetime.now().year)
 calc_button = result_button(text="Calculate", command=calc_sleep_hours, bg="#313")
 calc_button.grid(row=0, column=0, ipadx=2, ipady=2, pady=10, padx=(20, 160))
 
-exit_button = tkinter.Button(
-    result_frame,
-    text="Exit",
-    command=lambda: root.destroy(),
-    borderwidth=3,
-    fg="#fff",
-    bg="#222",
-)
 exit_button = result_button(text="Exit", command=lambda: root.destroy(), bg="#222")
 exit_button.grid(row=1, column=0, sticky="W", ipadx=2, padx=(20, 160))
 
